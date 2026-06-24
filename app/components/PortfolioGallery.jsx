@@ -49,7 +49,7 @@ export default function PortfolioGallery({ projects }) {
       )}
       <div className="project-grid">
         {visibleProjects.map((project) => (
-          <button className="project-card reveal-up" key={project.id || project.title} type="button" onClick={() => openProject(project)}>
+          <button className="project-card" key={project.id || project.title} type="button" onClick={() => openProject(project)}>
             <img src={asset(project.image)} alt={project.title} />
             <div>
               <span>{project.type} | {project.location}</span>

@@ -558,6 +558,11 @@ h3 {
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
+.project-grid .project-card {
+  opacity: 1;
+  transform: none;
+}
+
 .project-card img {
   width: 100%;
   height: 420px;
