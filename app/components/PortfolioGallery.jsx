@@ -6,6 +6,7 @@ import { asset } from "../site-data";
 export default function PortfolioGallery({ projects }) {
   const [activeProject, setActiveProject] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
+  const visibleProjects = projects.filter((project) => project.title && project.image);
   const gallery = activeProject
     ? (activeProject.gallery?.length ? activeProject.gallery : [activeProject.image]).filter(Boolean)
     : [];
@@ -40,8 +41,14 @@ export default function PortfolioGallery({ projects }) {
 
   return (
     <>
+      {!visibleProjects.length && (
+        <div className="portfolio-empty">
+          <h3>No portfolio projects are available.</h3>
+          <p>Add or edit projects from the admin panel, then refresh this page.</p>
+        </div>
+      )}
       <div className="project-grid">
-        {projects.map((project) => (
+        {visibleProjects.map((project) => (
           <button className="project-card reveal-up" key={project.id || project.title} type="button" onClick={() => openProject(project)}>
             <img src={asset(project.image)} alt={project.title} />
             <div>

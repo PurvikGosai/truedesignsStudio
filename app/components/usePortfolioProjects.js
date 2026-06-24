@@ -15,7 +15,7 @@ export default function usePortfolioProjects() {
         return response.json();
       })
       .then((data) => {
-        if (isMounted && Array.isArray(data.projects)) setProjects(data.projects);
+        if (isMounted && Array.isArray(data.projects) && data.projects.length > 0) setProjects(data.projects);
       })
       .catch(() => {});
 
