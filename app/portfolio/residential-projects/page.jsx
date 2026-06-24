@@ -1,12 +1,12 @@
-import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
-import { asset, projects } from "../../site-data";
+"use client";
 
-export const metadata = {
-  title: "Residential Projects | True Designs",
-  description: "Residential interior projects by True Designs in Vadodara.",
-};
+import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
+import PortfolioGallery from "../../components/PortfolioGallery";
+import usePortfolioProjects from "../../components/usePortfolioProjects";
+import { asset } from "../../site-data";
 
 export default function ResidentialProjectsPage() {
+  const projects = usePortfolioProjects();
   const residential = projects.filter((project) => project.type === "Residential");
   return (
     <>
@@ -16,7 +16,7 @@ export default function ResidentialProjectsPage() {
           <img src={asset("res-open-layout.jpg")} alt="Residential projects" />
           <div className="reveal-up"><p className="eyebrow">Portfolio</p><h1>Residential Projects</h1><p>Homes shaped around comfort, warmth, storage, and refined everyday living.</p></div>
         </section>
-        <section className="portfolio-section page-section"><div className="project-grid">{residential.map((project) => <article className="project-card reveal-up" key={project.title}><img src={asset(project.image)} alt={project.title} /><div><span>{project.type} | {project.location}</span><h3>{project.title}</h3><p>{project.detail}</p></div></article>)}</div></section>
+        <section className="portfolio-section page-section"><PortfolioGallery projects={residential} /></section>
       </main>
       <SiteFooter />
     </>

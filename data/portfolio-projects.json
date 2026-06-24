@@ -1,0 +1,56 @@
+[
+  {
+    "id": "warm-family-residence",
+    "title": "Warm Family Residence",
+    "type": "Residential",
+    "image": "res-living-warm.jpg",
+    "gallery": ["res-living-warm.jpg", "res-living-soft.jpg", "res-tv-unit.jpg", "res-dining.jpg"],
+    "location": "Vadodara",
+    "detail": "Layered living room with soft lighting, warm wood, and everyday comfort."
+  },
+  {
+    "id": "gardenbay-entry-suite",
+    "title": "Gardenbay Entry Suite",
+    "type": "Residential",
+    "image": "res-feature-entry.jpg",
+    "gallery": ["res-feature-entry.jpg", "res-entry.jpg", "res-living-warm.jpg", "res-kitchen.jpg"],
+    "location": "Vadodara",
+    "detail": "Statement foyer, sculptural niche, storage, and a calm arrival experience."
+  },
+  {
+    "id": "open-concept-home",
+    "title": "Open Concept Home",
+    "type": "Residential",
+    "image": "res-open-layout.jpg",
+    "gallery": ["res-open-layout.jpg", "res-kitchen.jpg", "res-dining.jpg", "res-living-soft.jpg"],
+    "location": "Vadodara",
+    "detail": "Open living, kitchen, dining, and circulation planned as one elegant flow."
+  },
+  {
+    "id": "executive-office",
+    "title": "Executive Office",
+    "type": "Commercial",
+    "image": "com-hero.jpg",
+    "gallery": ["com-hero.jpg", "com-tv-wall.jpg", "com-tv-desk.jpg", "com-lounge.jpg"],
+    "location": "Vadodara",
+    "detail": "Premium cabin with wood, glass, lighting, and a confident client-facing tone."
+  },
+  {
+    "id": "director-cabin",
+    "title": "Director Cabin",
+    "type": "Commercial",
+    "image": "com-director.jpg",
+    "gallery": ["com-director.jpg", "com-detail-blue.jpg", "com-side-cabin.jpg", "com-corridor.jpg"],
+    "location": "Vadodara",
+    "detail": "Deep palette, precise joinery, and a workspace designed for authority."
+  },
+  {
+    "id": "glass-workspace",
+    "title": "Glass Workspace",
+    "type": "Commercial",
+    "image": "com-glass.jpg",
+    "gallery": ["com-glass.jpg", "com-corridor.jpg", "com-lounge.jpg", "com-tv-wall.jpg"],
+    "location": "Vadodara",
+    "detail": "Transparent planning, partitions, and circulation for a polished office."
+  }
+]

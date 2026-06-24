@@ -1,12 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import PortfolioGallery from "../components/PortfolioGallery";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
-import { asset, projects } from "../site-data";
+import usePortfolioProjects from "../components/usePortfolioProjects";
+import { asset } from "../site-data";
 
 export default function PortfolioPage() {
   const [projectType, setProjectType] = useState("All");
-  const visibleProjects = useMemo(() => projectType === "All" ? projects : projects.filter((project) => project.type === projectType), [projectType]);
+  const projects = usePortfolioProjects();
+  const visibleProjects = useMemo(() => projectType === "All" ? projects : projects.filter((project) => project.type === projectType), [projectType, projects]);
 
   return (
     <>
@@ -35,14 +38,7 @@ export default function PortfolioPage() {
               ))}
             </div>
           </div>
-          <div className="project-grid">
-            {visibleProjects.map((project) => (
-              <article className="project-card" key={project.title}>
-                <img src={asset(project.image)} alt={project.title} />
-                <div><span>{project.type} | {project.location}</span><h3>{project.title}</h3><p>{project.detail}</p></div>
-              </article>
-            ))}
-          </div>
+          <PortfolioGallery projects={visibleProjects} />
         </section>
       </main>
       <SiteFooter />

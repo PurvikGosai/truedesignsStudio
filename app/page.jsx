@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import InteriorScene from "./components/InteriorScene";
 import { ConsultationForm, SiteFooter, SiteHeader } from "./components/SiteChrome";
-import { address, asset, highlights, processSteps, projects, services, whatsapp } from "./site-data";
+import usePortfolioProjects from "./components/usePortfolioProjects";
+import { address, asset, highlights, processSteps, services, whatsapp } from "./site-data";
 
 export default function Home() {
   const [projectType, setProjectType] = useState("All");
   const [activeHero, setActiveHero] = useState(0);
+  const projects = usePortfolioProjects();
 
   const heroSlides = [
     {
@@ -32,7 +35,7 @@ export default function Home() {
   const visibleProjects = useMemo(() => {
     if (projectType === "All") return projects;
     return projects.filter((project) => project.type === projectType);
-  }, [projectType]);
+  }, [projectType, projects]);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -101,6 +104,19 @@ export default function Home() {
               Each project is shaped around the site and the client: how the room is entered,
               where the eye rests, where daily objects live, and how the space feels after sunset.
             </p>
+          </div>
+        </section>
+
+        <section className="spatial-section">
+          <InteriorScene />
+          <div className="spatial-copy reveal-up">
+            <p className="eyebrow">3D Spatial Thinking</p>
+            <h2>Before a room is built, we study how volume, light, and furniture work together.</h2>
+            <p>
+              Interior design is not only surface selection. It is circulation, scale, storage, sightlines,
+              lighting layers, and how every object belongs inside the room.
+            </p>
+            <a className="button primary" href="/services/space-planning">Explore Space Planning</a>
           </div>
         </section>
 
