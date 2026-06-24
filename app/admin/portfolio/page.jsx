@@ -28,6 +28,7 @@ export default function AdminPortfolioPage() {
 
   const isEditing = Boolean(formProject.id);
   const coverOptions = useMemo(() => galleryValue.split("\n").map((item) => item.trim()).filter(Boolean), [galleryValue]);
+  const galleryImages = coverOptions;
 
   useEffect(() => {
     loadProjects();
@@ -58,6 +59,24 @@ export default function AdminPortfolioPage() {
     setFiles([]);
     setMessage("");
     setError("");
+  }
+
+  function setGalleryImages(images) {
+    const nextImages = images.filter(Boolean);
+    setGalleryValue(nextImages.join("\n"));
+    if (formProject.image && !nextImages.includes(formProject.image)) {
+      setFormProject({ ...formProject, image: nextImages[0] || "" });
+    }
+  }
+
+  function removeGalleryImage(imageToRemove) {
+    setMessage("");
+    setError("");
+    setGalleryImages(galleryImages.filter((image) => image !== imageToRemove));
+  }
+
+  function removePendingFile(fileToRemove) {
+    setFiles(files.filter((file) => file !== fileToRemove));
   }
 
   async function saveProject(event) {
@@ -169,15 +188,44 @@ export default function AdminPortfolioPage() {
             </select>
           </label>
 
-          <label>
-            Existing gallery images
-            <textarea className="admin-gallery-list" value={galleryValue} onChange={(event) => setGalleryValue(event.target.value)} placeholder="One image path per line" />
-          </label>
+          <div className="admin-gallery-manager">
+            <div>
+              <span>Current gallery images</span>
+              <p>Remove photos from this project, then save the project.</p>
+            </div>
+            {galleryImages.length ? (
+              <div className="admin-image-grid">
+                {galleryImages.map((image) => (
+                  <div className="admin-image-tile" key={image}>
+                    <img src={asset(image)} alt="" />
+                    <div>
+                      <small>{image === formProject.image ? "Cover image" : image}</small>
+                      <button type="button" onClick={() => removeGalleryImage(image)}>Remove</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="admin-empty-note">No saved images in this project yet.</p>
+            )}
+          </div>
 
           <label>
             Add new photos
             <input type="file" accept="image/*" multiple onChange={(event) => setFiles(Array.from(event.target.files || []))} />
           </label>
+
+          {files.length > 0 && (
+            <div className="admin-upload-list">
+              <span>Selected photos to upload</span>
+              {files.map((file) => (
+                <div key={`${file.name}-${file.size}`}>
+                  <p>{file.name}</p>
+                  <button type="button" onClick={() => removePendingFile(file)}>Remove</button>
+                </div>
+              ))}
+            </div>
+          )}
 
           {message && <p className="admin-success">{message}</p>}
           {error && <p className="admin-error">{error}</p>}
