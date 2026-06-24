@@ -41,6 +41,7 @@ export async function POST(request) {
   const uploads = await saveUploadedImages(form.getAll("photos"));
 
   project.gallery = [...project.gallery, ...uploads];
+  if (project.image && !project.gallery.includes(project.image)) project.image = project.gallery[0] || "";
   if (!project.image && project.gallery.length) project.image = project.gallery[0];
   if (!project.title || !project.location || !project.detail || !project.image) {
     return NextResponse.json({ error: "Title, location, detail, and at least one image are required." }, { status: 400 });

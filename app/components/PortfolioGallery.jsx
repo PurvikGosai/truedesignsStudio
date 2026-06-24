@@ -6,15 +6,17 @@ import { asset } from "../site-data";
 export default function PortfolioGallery({ projects }) {
   const [activeProject, setActiveProject] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
-  const gallery = activeProject?.gallery?.length ? activeProject.gallery : activeProject ? [activeProject.image] : [];
+  const gallery = activeProject
+    ? (activeProject.gallery?.length ? activeProject.gallery : [activeProject.image]).filter(Boolean)
+    : [];
 
   useEffect(() => {
     if (!activeProject) return undefined;
 
     function handleKeyDown(event) {
       if (event.key === "Escape") setActiveProject(null);
-      if (event.key === "ArrowRight") setActiveImage((index) => (index + 1) % gallery.length);
-      if (event.key === "ArrowLeft") setActiveImage((index) => (index - 1 + gallery.length) % gallery.length);
+      if (event.key === "ArrowRight" && gallery.length) setActiveImage((index) => (index + 1) % gallery.length);
+      if (event.key === "ArrowLeft" && gallery.length) setActiveImage((index) => (index - 1 + gallery.length) % gallery.length);
     }
 
     document.body.style.overflow = "hidden";
@@ -32,6 +34,7 @@ export default function PortfolioGallery({ projects }) {
   }
 
   function moveImage(direction) {
+    if (!gallery.length) return;
     setActiveImage((index) => (index + direction + gallery.length) % gallery.length);
   }
 
@@ -39,7 +42,7 @@ export default function PortfolioGallery({ projects }) {
     <>
       <div className="project-grid">
         {projects.map((project) => (
-          <button className="project-card reveal-up" key={project.title} type="button" onClick={() => openProject(project)}>
+          <button className="project-card reveal-up" key={project.id || project.title} type="button" onClick={() => openProject(project)}>
             <img src={asset(project.image)} alt={project.title} />
             <div>
               <span>{project.type} | {project.location}</span>
@@ -65,22 +68,32 @@ export default function PortfolioGallery({ projects }) {
             </div>
 
             <div className="gallery-stage">
-              <button className="gallery-arrow prev" type="button" aria-label="Previous image" onClick={() => moveImage(-1)}>
-                &lsaquo;
-              </button>
-              <img src={asset(gallery[activeImage])} alt={`${activeProject.title} image ${activeImage + 1}`} />
-              <button className="gallery-arrow next" type="button" aria-label="Next image" onClick={() => moveImage(1)}>
-                &rsaquo;
-              </button>
+              {gallery.length > 1 && (
+                <button className="gallery-arrow prev" type="button" aria-label="Previous image" onClick={() => moveImage(-1)}>
+                  &lsaquo;
+                </button>
+              )}
+              {gallery.length ? (
+                <img src={asset(gallery[activeImage])} alt={`${activeProject.title} image ${activeImage + 1}`} />
+              ) : (
+                <div className="gallery-empty">No photos are saved for this project.</div>
+              )}
+              {gallery.length > 1 && (
+                <button className="gallery-arrow next" type="button" aria-label="Next image" onClick={() => moveImage(1)}>
+                  &rsaquo;
+                </button>
+              )}
             </div>
 
-            <div className="gallery-thumbs" aria-label="Gallery thumbnails">
-              {gallery.map((image, index) => (
-                <button className={activeImage === index ? "active" : ""} key={image} type="button" onClick={() => setActiveImage(index)} aria-label={`Show image ${index + 1}`}>
-                  <img src={asset(image)} alt="" />
-                </button>
-              ))}
-            </div>
+            {gallery.length > 1 && (
+              <div className="gallery-thumbs" aria-label="Gallery thumbnails">
+                {gallery.map((image, index) => (
+                  <button className={activeImage === index ? "active" : ""} key={image} type="button" onClick={() => setActiveImage(index)} aria-label={`Show image ${index + 1}`}>
+                    <img src={asset(image)} alt="" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

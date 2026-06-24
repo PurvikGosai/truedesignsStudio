@@ -662,6 +662,16 @@ h3 {
   display: block;
 }
 
+.gallery-empty {
+  display: grid;
+  min-height: 320px;
+  place-items: center;
+  padding: 32px;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 800;
+  text-align: center;
+}
+
 .gallery-arrow {
   position: absolute;
   top: 50%;
